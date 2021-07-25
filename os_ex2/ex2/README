@@ -1,0 +1,59 @@
+brahan, danielabayev
+Brahan Wassan(320455116), Daniel Abayev (206224396)
+EX: 2
+
+FILES:
+Thread.h - header file for the Thread class, include getters\setters for the class
+Thread.cpp - the class rep a single thread
+uthreads.cpp - file that include the thread library functions
+makefile -- a makefile for the program
+
+REMARKS:
+No remarks
+
+ANSWERS:
+1. Describe one general use of user-level threads and explain why user-level threads are a
+   reasonable choice for your example. (2.5 pts)
+   General use of user-level threads can be found in web servers.
+   Web-servers need to process many user requests, while getting other new requests.
+   This procedure can be done efficiently by using user level threads, each request will be translated
+   into a thread. using this logic we can listen to requests and handle them without having
+   a situation where a thread is 'starving', additionally to that the requests can have a priority that
+   will help us prioritize tasks as we see fit.
+   Using Kernel level thread for this will result alot thread switching that we saw in class
+   will result high overhead.
+
+2. Google’s Chrome browser creates a new process for each tab. What are the advantages and
+   disadvantages of creating the new process (instead of creating kernel-level thread) (2.5 pts)
+   Advantages:
+    - Fail safety - the shared memory between process is smaller comparing to kernel level threads,
+                    this results that if one process crashes, the other processes are less likely to crash
+                    as well.
+    - Security - as we seen in class process are more isolated then kernel level threads,
+                 meaning a security breach in one of the web pages, will have less or no effect on
+                 the other browser process.
+   Disadvantages:
+    - High Overhead - as we seen in class process require more operation for switch\terminate
+                      this results more higher overhead then kernel level threads.
+    - Communications between processes - as we seen in class processes need the os to communicate between
+                                         them while the kernel level threads can communicate directly
+                                         with each other.
+3. interrupts and signals:
+        a.  Open an application (for example, “Shotwell” on one of the CS computers). Use the “ps -A”
+            command to extract the application’s pid (process ID).
+        b.  Open a shell and type “kill pid”
+        c.  Explain which interrupts and signals are involved during the command execution, what
+            triggered them and who should handle them. In your answer refer to the keyboard, OS,
+            shell and the application you just killed (2.5 pts)
+            - the process id we got is 30265
+            - as we seen in ex1 we used strace function so we can see the interrupts and signals,
+            - the first interrupts is the keyboard, it caught by the os and handled by exceve that got the
+                pid and the command "kill".
+            - the kill command sends the signal SIGTERM (which 'softly' terminate the program)to the software
+                shotwell, this being handled by the os default handler.
+4.  What is the difference between ‘real’ and ‘virtual’ time? Give one example of using each (2.5 pts)
+        - real - time by human standards, measured in day, hours, minutes etc.
+            - calendar or a watch represent a real time.
+        - virtual - time by process or app view, measured by the time an app run.
+            - in this ex we used a timer with virtual time because we want to measure the total number of quantum
+                that our library ran since its init.

@@ -1,0 +1,46 @@
+brahan, danielabayev
+Brahan Wassan(320455116), Daniel Abayev (206224396)
+EX: 3
+
+FILES:
+MapReduceFramework.cpp - MapReduce framework functions
+Barrier.cpp - Barrier class that wrap the pthread barrier
+Barrier.h - header file for the Barrier class
+fileWordCounter_comparison.png - chart of a comparison between the program thread number and the time the program ran.
+makefile -- a makefile for the program
+REMARKS:
+No remarks
+
+ANSWERS:
+
+part 1:
+fileWordCounter comparison:
+	we used  Intel(R) Xeon(R) CPU E5-2643 0 @ 3.30GHz
+			 CPU(s):              16
+			 as we can see from the graph around ~16 threads(number of the cores) we get an optimal runtime.
+			 more than that seems to cause no dramatic effects because the limit of the cores is 16 and there 
+			 is a little bit trade-off in runtime-numofthreads because the little overhead of their management. 
+			 
+part 2:
+1. foo is a CPU bound application, What will be the optimal number of kernel-level threads for foo?
+   You can assume there is no memory access. (2 pt)
+   
+   From the assumption that there is no memory access we can deduce that the program is CPU dependent.
+   so from that, the optimal number of kernel threads for that function should be as the number of cores
+   we have. we will fit optimally the runtime-numberofthreads trade-off,we will gain the best performance
+   with the minimal overhead.
+   
+2. Recall barrierdemo.cpp from TA4, and assume ​ MT_LEVEL=n , ​ and we switched the ​ foo
+   function with the following ​ foo ​ implementation
+    a. How many lines will be printed (as a function of ​ n ) ​ ​ (1 pt)
+
+    Every thread creates one 'child' thread that runs on the same function, so total of 2n lines.
+	
+    b. The order of the lines will not be deterministic, how many different options there
+       are? ​ (2 pt)
+	   
+       The fathers threads waits for their children threads to finish, meaning the order of the children output
+	   wont be deterministic and by simple counting we get n! different options.
+	   After that the fathers get loose and start printing too, and same as the childrens' 
+	   it wont be deterministic so n! different options.
+       In conclusion: (n!)^2 different options

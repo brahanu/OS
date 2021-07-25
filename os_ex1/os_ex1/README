@@ -1,0 +1,45 @@
+brahan, danielabayev
+Brahan Wassan(320455116), Daniel Abayev (206224396)
+EX: 1
+
+FILES:
+osm.c -- a static library with the programming part of the ex
+makefile -- a makefile for the program
+os_ex1_part_b.png
+
+REMARKS:
+No remarks
+
+ANSWERS:
+
+Assignment 1 - Using strace to understand what a progam is doing:
+
+If you run the command without execute permission you get :
+    strace: exec: Permission denied\n", 32strace: exec: Permission denied
+And the program exits
+After granting the program execute permission you get:
+
+If you running the program any number of arguments that different from one you get:
+    "Error. The program should receive a single argument. Exiting.\n: Success\n"
+Meaning the program writing an error message and then exits
+
+If you run the program with exec one argument you get:
+    mkdir("Welcome", 0775)                  = 0
+    mkdir("Welcome/To", 0775)               = 0
+    openat(AT_FDCWD, "Welcome/To/OS2020", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+    fstat(3, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+    write(3, "brahan\nIf you haven't read the course guidelines yet --- do it right now!\nempty", 79) = 79
+    close(3)                                = 0
+    unlink("Welcome/To/OS2020")             = 0
+    rmdir("Welcome/To/")                    = 0
+    rmdir("Welcome/")                       = 0
+    exit_group(0)
+
+Meaning the program creates a directory named “Welcome” with mkdir
+Inside of it it creates another directory named To
+Then its create a file called OS2020 (if its already created then it's just open it)
+Inside the new file it writes:
+ "USER_NAME\nIf you haven't read the course guidelines yet --- do it right now!\nGIVEN_INPUTFILE"
+Then we delete the OS2020 file with unlink and the directory with rmdir and exit the program.
+
+
